@@ -1,16 +1,8 @@
 ﻿using Newtonsoft.Json;
-using RESTfulEmployees.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using RESTfulEmployeesLibrary.Models;
+using RESTfulEmployeesLibrary.Services;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Navigation;
 
 namespace RESTfulEmployees.Services
 {

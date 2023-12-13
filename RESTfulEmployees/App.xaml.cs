@@ -1,6 +1,5 @@
 ﻿using RESTfulEmployees.Services;
-using System.Configuration;
-using System.Data;
+using RESTfulEmployeesLibrary.Services;
 using System.Windows;
 
 namespace RESTfulEmployees
