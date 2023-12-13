@@ -10,5 +10,11 @@ namespace RESTfulEmployees
     /// </summary>
     public partial class App : Application
     {
+        public IApiService ApiService;
+
+        public App()
+        {
+            ApiService = new ApiService();
+        }
     }
 }
