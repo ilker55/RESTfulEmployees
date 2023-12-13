@@ -11,7 +11,9 @@ namespace RESTfulEmployees
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new UserViewModel(((App)App.Current).ApiService);
+            var vm = new UserViewModel(((App)App.Current).ApiService);
+            vm.GetUsersCommand.Execute(0);
+            DataContext = vm;
         }
     }
 }
