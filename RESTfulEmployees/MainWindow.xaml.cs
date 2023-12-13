@@ -21,24 +21,6 @@ namespace RESTfulEmployees
         public MainWindow()
         {
             InitializeComponent();
-
-            GetUsers();
-        }
-
-        async void GetUsers()
-        {
-            var users = await ((App)App.Current).ApiService.GetUsers();
-            if (users == null)
-            {
-                MessageBox.Show("Failed to get users", "Error", MessageBoxButton.OK);
-                return;
-            }
-
-            foreach (var user in users)
-            {
-                Console.WriteLine(user.Name);
-            }
-            MessageBox.Show($"Retreived {users.Count} users", "Response", MessageBoxButton.OK);
         }
     }
 }
