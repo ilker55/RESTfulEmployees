@@ -1,13 +1,17 @@
 ﻿using RESTfulEmployeesLibrary.Models;
 using RESTfulEmployeesLibrary.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RESTfulEmployeesLibrary.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : BaseViewModel
     {
+        private readonly IApiService _apiService;
+
         public ObservableCollection<User> Users { get; } = new ObservableCollection<User>();
 
         public ICommand GetUsersCommand { get; }
@@ -16,17 +20,25 @@ namespace RESTfulEmployeesLibrary.ViewModels
 
         public UserViewModel(IApiService apiService)
         {
+            _apiService = apiService;
             GetUsersCommand = new RelayCommand(async (page) =>
             {
-                var users = await apiService.GetUsers((int?)page ?? 0);
+                var users = await GetUsers(page);
+
+                // Clear and fill list with new users
                 Users.Clear();
-                if (users == null)
-                    return;
                 foreach (var user in users)
                     Users.Add(user);
             });
+        }
 
-            GetUsersCommand.Execute(0);
+        public async Task<IList<User>> GetUsers(object page)
+        {
+            // Get all users for the given page
+            var users = await _apiService.GetUsers((int?)page ?? 0);
+
+            // Return users or empty list on null
+            return users ?? new List<User>();
         }
 
         private class RelayCommand : ICommand
