@@ -9,6 +9,6 @@ namespace RESTfulEmployees.Services
 {
     public interface IApiService
     {
-        Task<IList<User>?> GetUsers();
+        Task<IList<User>?> GetUsers(int page);
     }
 }

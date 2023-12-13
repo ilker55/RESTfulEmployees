@@ -27,11 +27,11 @@ namespace RESTfulEmployees.Services
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IList<User>?> GetUsers()
+        public async Task<IList<User>?> GetUsers(int page)
         {
             try
             {
-                var response = await _httpClient.GetAsync("v2/users");
+                var response = await _httpClient.GetAsync($"v2/users?page={page}");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
