@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RESTfulEmployees.Helpers;
 using RESTfulEmployeesLibrary.Models;
 using RESTfulEmployeesLibrary.Services;
 using System.Net.Http;
@@ -15,9 +16,10 @@ namespace RESTfulEmployees.Services
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://gorest.co.in/public/")
+                BaseAddress = new Uri(Config.BaseUrl)
             };
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Config.ApiToken);
         }
 
         /// <summary>
@@ -38,12 +40,12 @@ namespace RESTfulEmployees.Services
                     queryParams.Add("page", page.ToString()!);
 
                 // Create uri with query parameters
-                var uriBuilder = new UriBuilder("v2/users")
+                var uriBuilder = new UriBuilder
                 {
                     Query = string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={kvp.Value}"))
                 };
 
-                var response = await _httpClient.GetAsync(uriBuilder.Uri.AbsoluteUri);
+                var response = await _httpClient.GetAsync($"v2/users{uriBuilder.Query}");
                 if (response.IsSuccessStatusCode)
                 {
                     // Parse response
