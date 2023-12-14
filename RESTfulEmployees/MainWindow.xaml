@@ -4,18 +4,83 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ListView Name="UserGrid" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
-            <ListView.View>
+        Title="MainWindow" Height="460" Width="800">
+    <Grid Background="{StaticResource PrimaryContainer}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="56" />
+        </Grid.RowDefinitions>
+
+        <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser, Mode=TwoWay}" SelectionMode="Single" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Style="{StaticResource ListCard}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Content="{Binding Name}" Style="{StaticResource ListCardTitle}" VerticalAlignment="Bottom" />
+                        <Label Grid.Row="1" Content="{Binding Email}" Style="{StaticResource ListCardSubTitle}" VerticalAlignment="Top" />
+                        <Label Grid.Column="1" Content="{Binding Gender}" Style="{StaticResource ListCardSubTitle}" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding Status}" Style="{StaticResource ListCardSubTitle}" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="80"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="120"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="120"/>
-                    <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Gender}" Width="80"/>
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="80"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="150"/>
+                    <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Gender}" Width="100"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
+
+        <StackPanel Grid.Column="1" Grid.RowSpan="2" Margin="8">
+            <Label Content="Selected user" FontSize="14" FontWeight="Bold" Padding="0" />
+
+            <Label Content="Name:" Padding="0,4,0,2" />
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedUser.Name}" />
+
+            <Label Content="Email:" Padding="0,4,0,2" />
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedUser.Email, Mode=TwoWay}" />
+
+            <Label Content="Gender:" Padding="0,4,0,2" />
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedUser.Gender, Mode=TwoWay}" />
+
+            <Label Content="Status:" Padding="0,4,0,2" />
+            <TextBox TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SelectedUser.Status, Mode=TwoWay}" />
+
+            <Button Content="Update" Margin="0,16,0,8" />
+            <Button Content="Delete" Style="{StaticResource OutlinedButton}"/>
+        </StackPanel>
+
+
+        <!--<Border Grid.Row="1" Margin="16,8" CornerRadius="8" Background="#BB86FC">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3" Opacity="0.2"/>
+            </Border.Effect>
+        </Border>
+        <DockPanel Grid.Row="1" Margin="16,8">
+            <Button DockPanel.Dock="Left" Content="Refresh" Background="Transparent" Foreground="#fff" Command="{Binding GetUsersCommand}" />
+
+            <Button DockPanel.Dock="Right" Content="&gt;" Background="Transparent" />
+            <Label DockPanel.Dock="Right" Content="Page x" Padding="8,0" VerticalAlignment="Center" />
+            <Button DockPanel.Dock="Right" Content="&lt;" Background="Transparent" />
+
+            <Label Content="Loaded x users" Padding="8,0" VerticalAlignment="Center" />
+        </DockPanel>-->
+
+        <Button Grid.Row="1" Content="Add user" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8" Command="{Binding AddUserCommand}" />
     </Grid>
 </Window>
