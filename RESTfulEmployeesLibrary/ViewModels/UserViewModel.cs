@@ -16,7 +16,16 @@ namespace RESTfulEmployeesLibrary.ViewModels
 
         public ICommand GetUsersCommand { get; }
 
-        public User SelectedUser { get; set; }
+        private User _selectedUser;
+        public User SelectedUser
+        {
+            get => _selectedUser;
+            set
+            {
+                _selectedUser = value;
+                OnPropertyChanged();
+            }
+        }
 
         public UserViewModel(IApiService apiService)
         {
